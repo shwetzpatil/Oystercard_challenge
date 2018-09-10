@@ -50,3 +50,17 @@ test.touch_in
 test.in_journey? == true
 test.touch_out
 test.in_journey? == false
+
+In order to pay for my journey
+As a customer
+I need to have the minimum amount (£1) for a single journey.
+in irb
+require './lib/oystercard.rb'
+test = Oystercard.new
+test.top_up(1)
+test.touch_in
+test.ticket(1)
+test.touch_out
+
+test.balance == 0
+test.touch_in #raise error

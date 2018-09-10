@@ -44,12 +44,20 @@ describe Oystercard do
 
     describe '#touch_in' do
       it 'Starts journey' do
+        subject.top_up(1)
         expect(subject.touch_in).to eq true
       end
+
+      it 'raises error if balance goes below 1' do
+        subject.top_up(0.99)
+        expect{ subject.touch_in }.to raise_error('Insufficient funds')
+      end
+
     end
 
     describe '#touch_out' do
       it 'Ends journey' do
+        subject.top_up(1)
         subject.touch_in
         expect(subject.touch_out).to eq false
       end
@@ -57,6 +65,7 @@ describe Oystercard do
 
     describe '#in_journey?' do
       it 'Tells if in journey' do
+        subject.top_up(1)
         subject.touch_in
         expect(subject.in_journey?).to eq(true)
       end

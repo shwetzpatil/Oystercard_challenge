@@ -15,6 +15,7 @@ attr_accessor :balance
   end
 
   def touch_in
+    fail 'Insufficient funds' if @balance < 1
     @journey_status = true
   end
 
