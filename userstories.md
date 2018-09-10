@@ -64,3 +64,14 @@ test.touch_out
 
 test.balance == 0
 test.touch_in #raise error
+
+In order to pay for my journey
+As a customer
+When my journey is complete, I need the correct amount deducted from my card
+
+in irb
+require './lib/oystercard.rb'
+test = Oystercard.new
+test.top_up(3)
+test.touch_out
+test.balance == 1

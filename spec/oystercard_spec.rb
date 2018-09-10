@@ -61,6 +61,12 @@ describe Oystercard do
         subject.touch_in
         expect(subject.touch_out).to eq false
       end
+
+      it 'deducts journey fare on touch out' do
+        subject.top_up(3)
+        subject.touch_in
+        expect{ subject.touch_out }.to change{ subject.balance }.by (-Oystercard::MINIMUM_CHARGE)
+      end
     end
 
     describe '#in_journey?' do

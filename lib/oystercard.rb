@@ -5,12 +5,13 @@ attr_accessor :balance
     @journey_status = false
   end
   MAX_LIMIT = 90
+  MINIMUM_CHARGE = 2
   def top_up(amount)
     fail "Maximum limit is £90" if (@balance + amount > MAX_LIMIT)
     @balance += amount
   end
 
-  def ticket_fare(cost)
+  def ticket_fare(cost = MINIMUM_CHARGE)
     @balance -= cost
   end
 
@@ -20,6 +21,7 @@ attr_accessor :balance
   end
 
   def touch_out
+    ticket_fare(MINIMUM_CHARGE)
     @journey_status = false
   end
 
@@ -27,4 +29,8 @@ attr_accessor :balance
   def in_journey?
     @journey_status
   end
+
+  private
+
+
 end
