@@ -1,3 +1,5 @@
+require_relative 'station'
+
 class Oystercard
 attr_accessor :balance
   def initialize(balance = 0)

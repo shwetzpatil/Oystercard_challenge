@@ -75,3 +75,15 @@ test = Oystercard.new
 test.top_up(3)
 test.touch_out
 test.balance == 1
+
+
+In order to pay for my journey
+As a customer
+I need to know where I've travelled from
+
+in irb
+require './lib/oystercard.rb'
+test = Oystercard.new
+starting_station = Station.new("zone1")
+test.touch_in
+test.starting_station == "zone1"
