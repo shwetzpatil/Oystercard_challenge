@@ -4,6 +4,9 @@ describe Oystercard do
       it { is_expected.to respond_to(:balance) }
       it { is_expected.to respond_to(:top_up).with(1).argument }
       it { is_expected.to respond_to(:ticket_fare).with(1).argument }
+      it { is_expected.to respond_to(:touch_in) }
+      it { is_expected.to respond_to(:touch_out) }
+      it { is_expected.to respond_to(:in_journey?) }
 
       describe '#initialize' do
         it 'Is initially empty' do
@@ -38,4 +41,28 @@ describe Oystercard do
          expect(subject.balance).to eq(maximum_limit - cost)
        end
    end
+
+    describe '#touch_in' do
+      it 'Starts journey' do
+        expect(subject.touch_in).to eq true
+      end
+    end
+
+    describe '#touch_out' do
+      it 'Ends journey' do
+        subject.touch_in
+        expect(subject.touch_out).to eq false
+      end
+    end
+
+    describe '#in_journey?' do
+      it 'Tells if in journey' do
+        subject.touch_in
+        expect(subject.in_journey?).to eq(true)
+      end
+      it 'Tells if not in journey' do
+        subject.touch_out
+        expect(subject.in_journey?).to eq(false)
+      end
+    end
 end

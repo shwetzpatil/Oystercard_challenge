@@ -37,3 +37,16 @@ test = Oystercard.new
 test.top_up(90)
 test.ticket_fare(10)
 test.balance == 80
+
+In order to get through the barriers.
+As a customer
+I need to touch in and out.
+
+in irb
+require './lib/oystercard.rb'
+test = Oystercard.new
+test.in_journey? == false
+test.touch_in
+test.in_journey? == true
+test.touch_out
+test.in_journey? == false
