@@ -17,3 +17,23 @@ test = Oystercard.new
 amount = 10
 test.top_up(amount)
 test.balance == amount
+
+In order to protect my money from theft or loss
+As a customer
+I want a maximum limit (of £90) on my card
+
+in irb
+require './lib/oystercard.rb'
+test = Oystercard.new
+amount = 90
+test.top_up(amount)
+test.top_up(0.01)    #should raise error
+
+In order to pay for my journey
+As a customer
+I need my fare deducted from my card
+require './lib/oystercard.rb'
+test = Oystercard.new
+test.top_up(90)
+test.ticket_fare(10)
+test.balance == 80
