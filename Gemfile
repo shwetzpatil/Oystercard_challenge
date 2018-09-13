@@ -11,6 +11,6 @@ group :development, :test do
 end
 
 group :test do
-  gem 'simplecov', require: false
-  gem 'simplecov-console', require: false
+  gem 'simplecov', require: true
+  gem 'simplecov-console', require: true
 end
