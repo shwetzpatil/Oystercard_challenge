@@ -3,6 +3,7 @@ require 'oystercard'
 describe Oystercard do
 
 let(:station) { instance_double("Station", :name => 'ABC', :zone => 1) }
+let(:journey_obj) { double(:journey)}
 
 it { is_expected.to respond_to(:balance) }
 it { is_expected.to respond_to(:top_up).with(1).argument }
@@ -45,12 +46,12 @@ it { is_expected.to respond_to(:in_journey?) }
     end
 
     it 'sets the starting station' do
-      # entry_station = double(:station => "zone1")
+      entry_station = "ABC"
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      subject.touch_in(station)
-      expect(subject.entry_station).to eq(station)
+      subject.touch_in(entry_station)
+      expect(journey_obj).to receive(:start_journey).with(entry_station)
+      journey_obj.start_journey(entry_station)
     end
-
   end
 
   describe '#touch_out(station)' do
@@ -68,17 +69,16 @@ it { is_expected.to respond_to(:in_journey?) }
       expect { subject.touch_out(station) }.to change{ subject.balance }.by -(Oystercard::MINIMUM_FARE)
     end
 
-    it 'adds @entry_station and end_station to @journey_history' do
+    it 'ends the journey' do
+      entry_station = "ABC"
+      exit_station = 'XYZ'
       subject.top_up(Oystercard::MAXIMUM_BALANCE)
-      s1 = station #"Barbican-station"
-      subject.touch_in(s1)
-      s2 = station #"Wimbledon_station"
-      subject.touch_out(s2)
-      expect(subject.journey_history).to eq([{
-        entry_station: s1,
-        exit_station: s2
-      }])
+      subject.touch_in(entry_station)
+      subject.touch_out(exit_station)
+      expect(journey_obj).to receive(:exit_journey).with(exit_station)
+      journey_obj.exit_journey(exit_station)
     end
+
 
   end
 

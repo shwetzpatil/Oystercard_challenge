@@ -87,3 +87,23 @@ test = Oystercard.new
 starting_station = Station.new("zone1")
 test.touch_in
 test.starting_station == "zone1"
+/
+In order to be charged correctly
+As a customer
+I need a penalty charge deducted if I fail to touch in or out
+
+irb
+require './lib/oystercard.rb'
+card = Oystercard.new
+card.touch_in('ABC')
+journey = Journey.new
+journey.start_journey('ABC')
+card.touch_out('XYZ')
+journey.end_journey('XYZ')
+journey.journey_history == [{entry_station:'ABC', exit_station: 'XYZ'}]
+
+
+
+
+
+
